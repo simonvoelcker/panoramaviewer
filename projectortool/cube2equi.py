@@ -21,14 +21,14 @@ def get_multisample(xy, img_equi_size, face_size, img_faces, samples):
 			r += sample[0]
 			g += sample[1]
 			b += sample[2]
-	return (r / (samples*samples),
-			g / (samples*samples),
-			b / (samples*samples))
+	return (r // (samples*samples),
+			g // (samples*samples),
+			b // (samples*samples))
 
 def render_equi(img_faces, img_equi, face_size, samples):
 	for y in range(img_equi.size[1]):
 		if y % 100 == 0:
-			print '{} percent rendered'.format(100*y/img_equi.size[1])
+			print(f'{100*y/img_equi.size[1]} percent rendered')
 		for x in range(img_equi.size[0]):
 			multisample = get_multisample((x,y), img_equi.size, face_size, img_faces, samples)
 			img_equi.putpixel((x,y), multisample)
@@ -41,7 +41,7 @@ def cube_to_equi(faces_img_path, equi_img_path, equi_size, samples):
 	equi_img.save(equi_img_path)
 
 if len(sys.argv) != 5:
-	print 'Usage: {} <src_image> <dest_image> <dest_height> <samples>'.format(sys.argv[0])
+	print(f'Usage: {sys.argv[0]} <src_image> <dest_image> <dest_height> <samples>')
 	sys.exit(1)
 
 cube_to_equi(
@@ -50,4 +50,4 @@ cube_to_equi(
 	(2*int(sys.argv[3]), int(sys.argv[3])),
 	int(sys.argv[4])
 )
-print 'Done'
+print('Done')

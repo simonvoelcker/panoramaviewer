@@ -20,13 +20,13 @@ def get_multisample(xy, face_size, face, img_equi, samples):
 			r += sample[0]
 			g += sample[1]
 			b += sample[2]
-	return (r / (samples*samples),
-			g / (samples*samples),
-			b / (samples*samples))
+	return (r // (samples*samples),
+			g // (samples*samples),
+			b // (samples*samples))
 
 def render_faces(img_equi, img_faces, face_size, samples):
 	for face in face_offsets.keys():
-		print 'rendering face {}'.format(face)
+		print(f'Rendering face {face}')
 		for y in range(face_size[0]):
 			for x in range(face_size[1]):
 				sample = get_multisample((x,y), face_size, face, img_equi, samples)
@@ -40,7 +40,7 @@ def equi_to_cube(equi_img_path, faces_img_path, face_size, samples):
 	faces_img.save(faces_img_path)
 
 if len(sys.argv) != 5:
-	print 'Usage: {} <src_image> <dest_image> <face_height> <samples>'.format(sys.argv[0])
+	print(f'Usage: {sys.argv[0]} <src_image> <dest_image> <face_height> <samples>')
 	sys.exit(1)
 
 equi_to_cube(
@@ -49,4 +49,4 @@ equi_to_cube(
 	(int(sys.argv[3]), int(sys.argv[3])),
 	int(sys.argv[4])
 )
-print 'Done'
+print('Done')

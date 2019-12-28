@@ -4,7 +4,7 @@ from PIL import Image
 
 from projection import *
 
-class Vec3(object):
+class Vec3:
 	def __init__(self, x, y, z):
 		self.x = x
 		self.y = y
@@ -50,7 +50,7 @@ def get_sample(xy, src_img, radius):
 def render_blurred(src_img, dest_img, radius):
 	for y in range(src_img.size[1]):
 		if y % 100 == 0:
-			print '{} percent rendered'.format(100*y/src_img.size[1])
+			print(f'{100*y/src_img.size[1]} percent rendered')
 		for x in range(src_img.size[0]):
 			sample = get_sample((x,y), src_img, radius)
 			dest_img.putpixel((x,y), sample)
@@ -62,8 +62,8 @@ def blur_oids(src_img_path, dest_img_path, radius):
 	dest_img.save(dest_img_path)
 
 if len(sys.argv) != 4:
-	print 'Usage: {} <src_image> <dest_image> <radius>'.format(sys.argv[0])
+	print(f'Usage: {sys.argv[0]} <src_image> <dest_image> <radius>')
 	sys.exit(1)
 
 blur_oids(sys.argv[1], sys.argv[2], int(sys.argv[3]))
-print 'Done'
+print('Done')
