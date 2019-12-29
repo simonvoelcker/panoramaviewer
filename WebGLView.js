@@ -18,11 +18,11 @@ class WebGLView {
         this.scene = new THREE.Scene()
 
         this.panoramaView = new PanoramaView()
-        this.scene.add( this.panoramaView.mesh )
+        this.scene.add(this.panoramaView.mesh)
 
         // renderer
         this.renderer = new THREE.WebGLRenderer( { antialias: true } )
-        this.renderer.setClearColor( 0x000000, 1 )
+        this.renderer.setClearColor( 0x000080, 1 )
         this.renderer.setPixelRatio( window.devicePixelRatio )
         this.renderer.setSize( width, height )  
 

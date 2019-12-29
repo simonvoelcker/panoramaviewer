@@ -138,30 +138,27 @@
 
 		<script>
 
-			// some day.
-	        // "use strict";
-
 	        if (!Detector.webgl) Detector.addGetWebGLMessage();
 
-	        var container = document.getElementById('container');
+	        let container = document.getElementById('container');
 
-	        var webGLView = new WebGLView();
+	        let webGLView = new WebGLView();
 	        rendererContext = webGLView.initialize(container, window.innerWidth, window.innerHeight);
 
-	        onWindowResize = function() {
+	        onWindowResize = () => {
 	            webGLView.onResize(window.innerWidth, window.innerHeight);
 	        }
 
 	        window.addEventListener('resize', onWindowResize, false);
 	        container.appendChild(webGLView.renderer.domElement);
 
-	        updateAndRender = function() {
+	        updateAndRender = () => {
 	            webGLView.update();                
 	            webGLView.render();
 	            requestAnimationFrame(updateAndRender);
 	        }
 
-	        var setLoading = function(loading) {
+	        let setLoading = (loading) => {
 	        	if (loading) {
 		        	$('#loading').show();
 	        	} else {
@@ -169,55 +166,18 @@
 	        	}
 	        }
 
-	        var setImageUrls = function(url, oidUrl) {
+	        let setImageUrls = (url, oidUrl) => {
 	        	setLoading(true);
 	        	webGLView.panoramaView.loadTextures(url, oidUrl, function onLoaded() {
 	        		setLoading(false);
 	        	});
 	        }
 
-	        var setFishEyeMode = function(enabled) {
+	        let setFishEyeMode = (enabled) => {
 	        	webGLView.setFishEyeMode(enabled);
 	        }
 
-	        var navigation = new Navigation(setImageUrls, setFishEyeMode);
-
-	        var onLeftClick = function(event) {
-	            // intersection: has distance, face, faceIndex, object, point
-	            var intersection = webGLView.getIntersectionFromEvent(event);
-	            if (intersection != null) {
-	                oid = webGLView.panoramaView.selectPoint(intersection.point);
-	                navigation.setSelectedOid(oid);
-	                webGLView.focusObjectById(oid);
-	            }
-	        }
-
-	        var lastMouseDown = null;
-	        var lastMouseDownButton = null;
-	        var dragging = false;
-	        var dragThreshold = 20;
-
-	        document.addEventListener('mousedown', function(event) {
-	        	lastMouseDown = { x: event.x, y: event.y };
-	        	lastMouseDownButton = event.button;
-	        	dragging = false;
-	        }, false);
-	        document.addEventListener('mousemove', function(event) {
-	        	if (event.buttons != 0) {
-		        	d = Math.abs(event.x-lastMouseDown.x) + Math.abs(event.y-lastMouseDown.y)
-		        	if (d > dragThreshold) {
-		        		dragging = true;
-		        	}
-	        	}
-	        }, false);
-		    document.addEventListener('mouseup', function(event) {
-		        event.preventDefault();
-		        if (!dragging) {
-		        	if (lastMouseDownButton == 0) {
-		        		onLeftClick(event);
-		        	}
-		        }
-		    }, false);
+	        let navigation = new Navigation(setImageUrls, setFishEyeMode);
 
 	        if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)) {
 	        	// mobile
