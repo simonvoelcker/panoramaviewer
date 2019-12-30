@@ -166,18 +166,19 @@
 	        	}
 	        }
 
-	        let setImageUrls = (url, oidUrl) => {
-	        	setLoading(true);
-	        	webGLView.panoramaView.loadTextures(url, oidUrl, function onLoaded() {
-	        		setLoading(false);
-	        	});
+	        let setImageUrl = (url) => {
 	        }
+
+        	setLoading(false);
+
+        	webGLView.panoramaView.loadTexture('images/balcony.png', () => {})
+        	webGLView.backgroundView.loadTexture('images/skymap.jpg', () => {})
 
 	        let setFishEyeMode = (enabled) => {
 	        	webGLView.setFishEyeMode(enabled);
 	        }
 
-	        let navigation = new Navigation(setImageUrls, setFishEyeMode);
+	        let navigation = new Navigation(setImageUrl, setFishEyeMode);
 
 	        if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)) {
 	        	// mobile

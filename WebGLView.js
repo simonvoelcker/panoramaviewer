@@ -10,15 +10,18 @@ class WebGLView {
     initialize(container, width, height) {
 
         let webGLView = this
-        this.camera = new THREE.PerspectiveCamera(75.0, width / height, 1, 10000)
+        this.camera = new THREE.PerspectiveCamera(80.0, width / height, 100, 300)
         this.controls = new THREE.OrbitControls(this.camera, container)
         this.greaterFov = 100.0
         this.updateFov()
 
         this.scene = new THREE.Scene()
 
-        this.panoramaView = new PanoramaView()
+        this.panoramaView = new PanoramaView(200, false)
         this.scene.add(this.panoramaView.mesh)
+
+        this.backgroundView = new PanoramaView(201, true)
+        this.scene.add(this.backgroundView.mesh)
 
         // renderer
         this.renderer = new THREE.WebGLRenderer( { antialias: true } )
@@ -94,7 +97,7 @@ class WebGLView {
         let webGLView = this
 
         this.animateCameraTo(
-            new THREE.Vector3().copy(this.camera.position).setLength(enabled ? 500 : 1),
+            new THREE.Vector3().copy(this.camera.position).setLength(enabled ? 50 : 1),
             new THREE.Vector3(0,0,0),
             enabled ? 120.0 : 100.0,
             1000

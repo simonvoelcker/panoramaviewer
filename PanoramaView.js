@@ -1,29 +1,17 @@
 class PanoramaView {
 
-    constructor(textureUrl) {
-    	this.geometry = new THREE.SphereGeometry(500, 60, 40)
+    constructor(size, isOpaque) {
+        this.isOpaque = isOpaque
+    	this.geometry = new THREE.SphereGeometry(size, 60, 40)
     	this.geometry.applyMatrix(new THREE.Matrix4().makeScale( -1, 1, 1 ))
     	this.mesh = new THREE.Mesh(this.geometry, null)
         this.selectedObjectId = null
     }
 
-    loadTextures(url, oidUrl, onAllLoaded) {
-        if (oidUrl == null) {
-            this.texture = THREE.ImageUtils.loadTexture(url, THREE.UVMapping, onAllLoaded)
-            this.oidTexture = null
-            this.useMaterial(this.createSimpleTextureMaterial())
-        } else {
-            let numToLoad = 2
-            let onOneLoaded = () => {
-                numToLoad--
-                if (numToLoad == 0) {
-                    onAllLoaded()
-                }
-            }
-            this.texture = THREE.ImageUtils.loadTexture(url, THREE.UVMapping, onOneLoaded)
-            this.oidTexture = THREE.ImageUtils.loadTexture(oidUrl, THREE.UVMapping, onOneLoaded)
-            this.useMaterial(this.createSimpleTextureMaterial())
-        }
+    loadTexture(url, onLoaded) {
+        this.texture = THREE.ImageUtils.loadTexture(url, THREE.UVMapping, onLoaded)
+        this.oidTexture = null
+        this.useMaterial(this.createSimpleTextureMaterial())
     }
 
     useMaterial(material) {
@@ -31,7 +19,12 @@ class PanoramaView {
     }
 
     createSimpleTextureMaterial() {
-    	return new THREE.MeshBasicMaterial({ map: this.texture })
+    	return new THREE.MeshBasicMaterial({
+            map: this.texture,
+            transparent: !this.isOpaque,
+            depthTest: this.isOpaque,
+            depthWrite: this.isOpaque
+        })
     }
 
     createHighlightObjectMaterial(objectId) {
